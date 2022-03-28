@@ -6,6 +6,7 @@ import { TareasTable } from "../../components/Tareas/TareasTable";
 import config from "../api/config"
 
  export const getStaticPaths = async () => {
+   try{
    const res = await fetch(`${config.URL}proyecto`)
    const data = await res.json()
    const paths = data.map(proyecto =>{
@@ -17,14 +18,21 @@ import config from "../api/config"
      paths,
      fallback: true
      }
+   }catch(err){
+      return err
+    }
  };
  export const getStaticProps = async (context) => {
+   try {
    const id = context.params.id
    const res = await fetch(`${config.URL}proyecto/${id}`)
    const [data] = await res.json()
    return {
      props: { proyecto: data}
    }
+  } catch (err) {
+    return err
+  }
  }
 
  const Proyecto = ({ proyecto }) => {
