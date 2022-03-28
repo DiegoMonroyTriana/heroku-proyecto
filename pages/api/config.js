@@ -1,4 +1,4 @@
 export default {
   SECRET: 'asudyftae712!@#$%#@4aowuiecdhaiduc84726',
-  URL: 'https://heroku-proyecto-9d72a4idi-diegomonroytriana.vercel.app/api/'
+  URL: 'https://home-5007074129.app-ionos.space/api/'
 }
