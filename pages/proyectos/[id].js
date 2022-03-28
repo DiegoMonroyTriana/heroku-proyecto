@@ -6,7 +6,7 @@ import { TareasTable } from "../../components/Tareas/TareasTable";
 import config from "../api/config"
 
  export const getStaticPaths = async () => {
-   const res = await fetch(`${config.URL}/proyecto`)
+   const res = await fetch(`${config.URL}proyecto`)
    const data = await res.json()
    const paths = data.map(proyecto =>{
      return {
