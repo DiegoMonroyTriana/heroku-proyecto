@@ -30,6 +30,7 @@ export function Cuenta () {
       console.log(data)
       const response = await axios.post(`${config.URL}empleados/changePass`, data)
       setPassvbl(false)
+      alert('contraseña actualizada')
       return response
     } catch (error) {
       return error
