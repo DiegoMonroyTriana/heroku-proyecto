@@ -24,7 +24,7 @@ export function ProyectoCard () {
   function tusProyectos (data)  {
     const userId = getId()
     for (let i in data) {
-      if(data[i].creador_id === userId ){
+      if(data[i].creador_id == userId ){
         misproyectos[i] = data[i]
       }else{
         const trabajo = data[i].trabajadores.split(',')
