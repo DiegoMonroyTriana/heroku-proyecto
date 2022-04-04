@@ -43,14 +43,14 @@ export function TablaProyectos () {
   }, [])
   return (
     <div className="overflow-x-auto p-3">
-            <Text fontSize ="2xl" color='gray.500' className='p-3'>PROYECTOS</Text> 
-            {isloading ? <Spinner
+            <Text fontSize ="2xl" color='gray.500' className='p-3 text-center'>PROYECTOS</Text> 
+            {isloading ? <div className = 'flex justify-center content-center align-middle '><Spinner
   thickness='4px'
   speed='0.65s'
   emptyColor='gray.200'
   color='blue.500'
   size='xl'
-/> : <>
+/></div> : <>
             {proyectos ? <Collapse.Group shadow >
               {proyectos.map((proyecto) => (
                 <Collapse className = "uppercase" key={proyecto.id} title = {proyecto.nombre}>
