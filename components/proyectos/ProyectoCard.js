@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import config from '../../pages/api/config'
 import axios from 'axios'
 import { Collapse, Progress, Spacer, Text } from '@nextui-org/react'
-import { Input, Tooltip  } from '@chakra-ui/react'
+import { Input, Skeleton, Tooltip  } from '@chakra-ui/react'
 import Cookie from 'universal-cookie'
 import jwt from 'jsonwebtoken'
 import Link from 'next/link'
@@ -10,8 +10,8 @@ import { motion } from 'framer-motion'
 
 export function ProyectoCard () {
   const [misproyectos] = useState([])
-  const [ isloading, setIsloading] = useState (true)
-
+  const [isloading, setIsloading] = useState (true)
+  const [isloading2, setIsloading2] = useState (true)
   const progreso = Math.floor(Math.random() * 100)
   const faltan = Math.abs(progreso - Math.floor(Math.random() * 100))
   const formatoFecha = async (data)=> {
@@ -37,6 +37,7 @@ export function ProyectoCard () {
       }
     }
     if(misproyectos.length!== 0){
+      setIsloading2(false)
       setIsloading(false)
     }
   }
@@ -72,7 +73,14 @@ export function ProyectoCard () {
   },[])
   return (
     <div className = 'pt-5'>
-    {isloading ? <motion.div initial={{opacity: 0 }} animate = {{opacity:1, transition: {duration : 0.3}}}className = 'container'> <p className="text-4xl font-normal text-pink-800 text-center">
+      { isloading2 ? <div className = 'flex flex-col justify-center items-center'> 
+  <Skeleton height='50px' width= '80%' />
+  <Spacer y= {0.4}/>
+  <Skeleton height='50px' width= '80%'/>
+  <Spacer y= {0.4}/>
+  <Skeleton height='50px' width= '80%' />
+ </div>: <>
+      {isloading ? <motion.div initial={{opacity: 0 }} animate = {{opacity:1, transition: {duration : 0.3}}}className = 'container'> <p className="text-4xl font-normal text-pink-800 text-center">
   Aún no tienes proyectos 
 </p></motion.div>:<div className = 'container'> <Collapse.Group shadow >
               {misproyectos.map((proyecto) => (
@@ -100,7 +108,9 @@ export function ProyectoCard () {
                 <Link href= {'proyectos/' + proyecto.id}><a className = 'bg-gray-700 text-white hover:bg-gray-500 p-2 rounded m-3 w-56'>Detalles</a></Link> 
                 </Collapse>
               ))}
-            </Collapse.Group> </div>} 
+            </Collapse.Group> </div>}
+      </>}
+     
     </div>
   )
 }
