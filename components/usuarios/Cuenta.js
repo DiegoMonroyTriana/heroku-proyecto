@@ -1,5 +1,5 @@
 import { Text, Modal, Input, Spacer } from '@nextui-org/react'
-import { Button} from '@chakra-ui/react'
+import { Button, SkeletonCircle, SkeletonText} from '@chakra-ui/react'
 import Cookie from 'universal-cookie'
 import axios from 'axios'
 import jwt from 'jsonwebtoken'
@@ -19,6 +19,7 @@ export function Cuenta () {
     id: '',
     avatar: ''
   })
+  const [ isLoading, setIsLoading ] = useState(true) 
   const [passvbl, setPassvbl] = useState(false)
   const handlerVisible = () => {
     setPassvbl(true)
@@ -30,7 +31,6 @@ export function Cuenta () {
       console.log(data)
       const response = await axios.post(`${config.URL}empleados/changePass`, data)
       setPassvbl(false)
-      alert('contraseña actualizada')
       return response
     } catch (error) {
       return error
@@ -47,7 +47,7 @@ export function Cuenta () {
       const avatar = datos.nombre.charAt(0) + datos.apellido_paterno.charAt(0)
       datos.avatar = avatar
       setUsuarios(datos)
-
+      setIsLoading(false)
     } catch (error) {
       console.log(error)
     }
@@ -63,7 +63,7 @@ export function Cuenta () {
 
   return (
         <div className='grid-cols-1 m-3 p-9 rounded-lg drop-shadow-2x bg-gray-50 justify-items-start'>
-            <motion.div initial = {{scale: 0}} animate = {{scale: 1, transition: {duration: 0.5}}} key={usuarios.id} className = "max-w-screen-md text-left">
+          { isLoading ? <>  <SkeletonCircle size='70' /> <SkeletonText mt='4' noOfLines={5} spacing='5' /></> : <><motion.div initial = {{scale: 0}} animate = {{scale: 1, transition: {duration: 0.5}}} key={usuarios.id} className = "max-w-screen-md text-left">
               <header className = 'flex justify-center w-full pb-4'>
                 <motion.div initial = {{scale : 0, rotate: 45}} animate = {{scale : 1,  rotate:0, transition : {duration: 0.3}}}className='bg-gray-700 rounded-full  text-white text-xl justify-center w-16 h-16 flex items-center text-2xl'>{usuarios.avatar}</motion.div>
               </header>
@@ -78,7 +78,8 @@ export function Cuenta () {
             </motion.div>
             <footer className = 'flex justify-center w-full'>
             <button className = 'bg-gray-700 hover:bg-gray-400 text-white font-semibold rounded-md p-3' onClick={handlerVisible}>Cambiar contraseña</button>
-            </footer>
+            </footer></>}
+            
             
             <Modal closeButton aria-labelledby="modal-title" open={passvbl} onClose={closeHandler}>
                 <Modal.Header>
@@ -87,7 +88,7 @@ export function Cuenta () {
                 </Modal.Header>
                     <form onSubmit={handleSubmit(onSubmit)}>
                     <Modal.Body>
-                    <Input
+                    <Input.Password
                         clearable
                         bordered
                         fullWidth
@@ -97,7 +98,7 @@ export function Cuenta () {
                         name='password'
                         {...register('password', { required: true })}
                     />
-                    <Input
+                    <Input.Password
                         clearable
                         bordered
                         fullWidth
