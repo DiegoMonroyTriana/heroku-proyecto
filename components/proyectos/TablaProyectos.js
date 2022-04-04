@@ -3,9 +3,11 @@ import { Collapse, Spacer, Input, Progress, Link } from '@nextui-org/react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import config from '../../pages/api/config'
+import { Spinner } from '@chakra-ui/react'
 
 export function TablaProyectos () {
   const [proyectos, setProyectos] = useState([])
+  const [isloading, setIsloading] = useState (true)
   const progreso = Math.floor(Math.random() * 100)
   const faltan = Math.abs(progreso - Math.floor(Math.random() * 100))
   const formatoFecha = async (data)=> {
@@ -31,6 +33,7 @@ export function TablaProyectos () {
       const a = await buscarCreador(data)
       const b = await formatoFecha (a)
       setProyectos(b)
+      setIsloading(false)
     } catch (error) {
       return error
     }
@@ -41,10 +44,17 @@ export function TablaProyectos () {
   return (
     <div className="overflow-x-auto p-3">
             <Text fontSize ="2xl" color='gray.500' className='p-3'>PROYECTOS</Text> 
+            {isloading ? <Spinner
+  thickness='4px'
+  speed='0.65s'
+  emptyColor='gray.200'
+  color='blue.500'
+  size='xl'
+/> : <>
             {proyectos ? <Collapse.Group shadow >
               {proyectos.map((proyecto) => (
                 <Collapse className = "uppercase" key={proyecto.id} title = {proyecto.nombre}>
-                <Text className='fs-3 normal-case' >Descripcion:  {proyecto.descripcion}</Text>
+                <Text className='fs-3 normal-case' >Descripcion: {proyecto.descripcion}</Text>
                 <Spacer y = {1}/>
                 <label className = 'text-lg'>Fecha de de entrega del proyecto</label>
                 <Spacer  y = {0.4}/>
@@ -68,6 +78,8 @@ export function TablaProyectos () {
                 </Collapse>
               ))}
             </Collapse.Group> : <Text>No hay proyectos</Text>}
+            </>}
+            
              
       </div>
   )
