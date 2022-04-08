@@ -6,10 +6,11 @@ import jwt from 'jsonwebtoken'
 import config from '../../pages/api/config'
 import { useState, useEffect, useRef } from 'react'
 import moment from 'moment'
+import 'moment/locale/es'
 export function Navbar () {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const btnRef = useRef()
-  const fecha = moment().format('LT')
+  const fecha = moment().locale('es-mx').format('dddd DD [de] MMMM [de] YYYY')
 
   const [usuarios, setUsuarios] = useState({
     nombre: '',
