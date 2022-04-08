@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { FormHerramienta } from '../../components/herramienta/FormHerramienta'
 import { TablaHerramienta } from '../../components/herramienta/TablaHerramienta'
 import { Navbar } from '../../components/Navbar/Navbar'
-import { Switch } from '@nextui-org/react'
 import { HerramientaUso } from '../../components/herramienta/HerramientaUso'
 import axios from 'axios'
 import config from '../api/config'
@@ -41,17 +40,12 @@ export default function Inicio () {
     data(userId)
   }, [])
 
-  const rol = usuarios.rol === 'Empleado' || usuarios.rol === 'Lider'
+  const rol = usuarios.rol === 'Admin'
   return (
       <>
       <Navbar/>
-        {rol ? <HerramientaUso/> : <><HerramientaUso/><Switch shadow color="primary" animated={false} checked={true} onChange={(e) => {
-          e.preventDefault()
-          if (crear) {
-            setCrear(false)
-          } else { setCrear(true) }
-        }}/>
-        {crear ? <TablaHerramienta/> : <FormHerramienta/>}</>}
+        {rol ?  <>
+        {crear ? <><button className = 'bg-gray-700 text-white hover:bg-gray-500 p-2 m-5 rounded-md w-48' onClick={()=>setCrear(false)}>Ver herramientas</button> <TablaHerramienta/></> :<><button className = 'bg-gray-700 text-white hover:bg-gray-500 p-2 m-5 rounded-sm w-48' onClick={()=>setCrear(true)}>Registrar herramienta</button> <FormHerramienta/></>}</> : <HerramientaUso/> }
       </>
 
   )
