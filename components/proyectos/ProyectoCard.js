@@ -94,9 +94,9 @@ export function ProyectoCard () {
                 <label className = 'text-md font-bold'>Progreso del proyecto</label>
                 <Spacer y = {0.3}/>
                 <div className = 'grid-cols-3 gap-3 '>
-                 <a><Tooltip label = 'Ver tareas pendientes'><label className = ' hover:text-red-500 cursor-pointer'> Tareas Pendientes: {faltan} || </label></Tooltip></a>
-                 <a><Tooltip label = 'Ver tareas realizadas'><label className = ' hover:text-green-500 cursor-pointer'> Tareas Realizadas: {progreso} || </label></Tooltip></a>
-                 <a><Tooltip label = 'Ver todas las tareas'><label className = ' hover:text-blue-500 cursor-pointer '> Total de tareas : {faltan + progreso}</label></Tooltip></a>
+                 <label className = ' hover:text-red-500 cursor-pointer'> Tareas Pendientes: {faltan} || </label>
+                 <label className = ' hover:text-green-500 cursor-pointer'> Tareas Realizadas: {progreso} || </label>
+                 <label className = ' hover:text-blue-500 cursor-pointer '> Total de tareas : {faltan + progreso}</label>
                 </div>  
                 <Progress value = {progreso * 100 /(faltan + progreso)} readOnly striped color = 'success'/> 
                 <span>{Math.floor(progreso * 100 /(faltan + progreso))} %</span>
