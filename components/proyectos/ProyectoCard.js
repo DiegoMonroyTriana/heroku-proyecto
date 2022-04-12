@@ -36,9 +36,13 @@ export function ProyectoCard () {
       }
       }
     }
-    if(misproyectos.length!== 0 || misproyectos.length!== undefined){
+    if(misproyectos.length!== 0){
       setIsloading2(false)
-      setIsloading(true)
+      if(misproyectos.length!== undefined) {
+        setIsloading(true)
+      }else{
+        
+      setIsloading(false)}
     }
   }
   const buscarCreador = async (data) => {
