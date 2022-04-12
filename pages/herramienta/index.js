@@ -45,7 +45,7 @@ export default function Inicio () {
       <>
       <Navbar/>
         {rol ?  <>
-        {crear ? <><button className = 'bg-gray-700 text-white hover:bg-gray-500 p-2 m-5 rounded-md w-48' onClick={()=>setCrear(false)}>Ver herramientas</button> <TablaHerramienta/></> :<><button className = 'bg-gray-700 text-white hover:bg-gray-500 p-2 m-5 rounded-sm w-48' onClick={()=>setCrear(true)}>Registrar herramienta</button> <FormHerramienta/></>}</> : <HerramientaUso/> }
+        {crear ? <><button className = 'bg-gray-700 text-white hover:bg-gray-500 p-2 m-5 rounded-md w-48' onClick={()=>setCrear(false)}>Registrar herramientas</button> <TablaHerramienta/></> :<><button className = 'bg-gray-700 text-white hover:bg-gray-500 p-2 m-5 rounded-sm w-48' onClick={()=>setCrear(true)}>Ver herramienta</button> <FormHerramienta/></>}</> : <HerramientaUso/> }
       </>
 
   )
