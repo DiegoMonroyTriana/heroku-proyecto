@@ -1,7 +1,7 @@
-import { Table, Thead, Tbody, Tr, Th, Td, Text, IconButton } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import config from '../../pages/api/config'
 import axios from 'axios'
+import Swal from 'sweetalert2'
 export function TablaEmpleados () {
   const [empleados, setEmpleados] = useState([])
   const cargarEmpleados = async () => {
@@ -21,55 +21,79 @@ export function TablaEmpleados () {
     }
   }
   const eliminarEmpleado = async (id) => {
-    try {
-      const response = await axios.delete(`${config.URL}empleados/${id}`)
-      const data = await response.data
-      console.log(data)
-    } catch (error) {
-      console.log(error)
-    }
+
+      Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'No podrás revertir esto!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminar!'
+      }).then((result) => {
+        if (result.value) {
+          const response = axios.delete(`${config.URL}empleados/${id}`)
+          console.log(response.data)
+          cargarEmpleados()
+          Swal.fire(
+            'Eliminado!',
+            'El empleado ha sido eliminado.',
+            'success'
+          )
+        }
+      })
   }
   useEffect(() => {
     cargarEmpleados()
   }, [])
   return (
-        <div className="overflow-x-auto p-3 text-center">
-            <Text fontSize ="2xl" color='gray.500' className='p-3'>EMPLEADOS</Text>
-            <Table variant='striped' colorScheme='teal' size="sm">
-                <Thead >
-                    <Tr>
-                        <Th className='justify-center'>Nombre</Th>
-                        <Th className='justify-center'>Apellido Paterno</Th>
-                        <Th className='justify-center'>Apellido Materno</Th>
-                        <Th className='justify-center'>Numero de Empleado</Th>
-                        <Th className='justify-center'>Puesto</Th>
-                        <Th className='justify-center'>Email</Th>
-                        <Th className='justify-center'>Rol</Th>
-                        <Th className='justify-center'>Editar</Th>
-                        <Th className='justify-center'>Eliminar</Th>
-                    </Tr>
-                </Thead>
-                <Tbody>
-                {empleados.map((empleado) => (
-                    <Tr key={empleado.id}>
-                        <Td>{empleado.nombre}</Td>
-                        <Td>{empleado.apellido_paterno}</Td>
-                        <Td>{empleado.apellido_materno}</Td>
-                        <Td>{empleado.numero_empleado}</Td>
-                        <Td>{empleado.puesto}</Td>
-                        <Td>{empleado.email}</Td>
-                        <Td>{empleado.rol}</Td>
-                        <Td><IconButton colorScheme='teal' variant='ghost'icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-</svg>} onClick={() => editarEmpleado(empleado.id)}/></Td>
-                        <Td><IconButton colorScheme='red' variant='ghost' icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-</svg>} onClick={() => eliminarEmpleado(empleado.id)}/></Td>
-                    </Tr>
+
+    <div className = 'max-w-10xl mx-auto'>
+    <div className = 'flex flex-col'>
+      <div className = 'overflow-x-auto shadow-md sm:rounded-lg'>
+        <div className = 'inline-block min-w-full align-middle'>
+          <div className = 'overflow-hidden'>
+           <table className= 'min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700'>
+            <thead className = 'bg-gray-100 dark:bg-gray-700'>
+              <tr>
+                <th scope="col" className = 'py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-200'>Nombre</th>
+                <th scope="col" className = 'py-3 px-6 text-xs font-medium tracking-wider text-gray-700 uppercase dark:text-gray-200 text-center'>Apellido Paterno</th>
+                <th scope="col" className = 'py-3 px-6 text-xs font-medium tracking-wider text-center text-gray-700 uppercase dark:text-gray-400'>Apellido Materno</th>
+              <th scope="col" className = 'py-3 px-6 text-xs font-medium tracking-wider text-center text-gray-700 uppercase dark:text-gray-400'>Numero de empleador</th>
+           
+              <th scope="col" className = 'py-3 px-6 text-xs font-medium tracking-wider text-center text-gray-700 uppercase dark:text-gray-400'>Puesto</th>
+              <th scope="col" className = 'py-3 px-6 text-xs font-medium tracking-wider text-center text-gray-700 uppercase dark:text-gray-400'>Email</th>
+             
+              <th scope="col" className = 'py-3 px-6 text-xs font-medium tracking-wider text-center text-gray-700 uppercase dark:text-gray-400'>Rol</th>
+            
+              <th scope="col" className = 'py-3 px-6 text-xs font-medium tracking-wider text-center text-gray-700 uppercase dark:text-gray-400'>Editar</th>
+            
+              <th scope="col" className = 'py-3 px-6 text-xs font-medium tracking-wider text-center text-gray-700 uppercase dark:text-gray-400'>Eliminar</th>
+              </tr>
+
+            </thead>
+            <tbody className = 'bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700'>
+            {empleados.map((empleado) => (
+                    <tr className = 'hover:bg-gray-100 dark:hover:bg-gray-700' key={empleado.id}>
+                        <td className = 'py-4 pl-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white'>{empleado.nombre }</td>
+                        <td className = 'py-4 pl-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white'>{empleado.apellido_paterno }</td>
+                        <td className = 'py-4 pl-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white'>{empleado.apellido_materno }</td>
+                        <td className = 'py-4 pl-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white'>{empleado.numero_empleado }</td>
+                        <td className = 'py-4 pl-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white'>{empleado.puesto }</td>
+                        <td className = 'py-4 pl-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white'>{empleado.email }</td>
+                        <td className = 'py-4 pl-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white'>{empleado.rol }</td>
+                        <td className = 'py-4 pl-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white'><button onClick={()=> editarEmpleado()}>Edit</button></td>
+                          <td className = 'py-4 pl-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white'><button onClick={()=>eliminarEmpleado(empleado.id)}> delete</button></td> </tr>
                 ))}
-                </Tbody>
-            </Table>
+            </tbody>
+          </table>
+
         </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
 
   )
 }
