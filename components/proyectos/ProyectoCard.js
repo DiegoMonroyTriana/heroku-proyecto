@@ -38,11 +38,8 @@ export function ProyectoCard () {
     }
     if(misproyectos.length!== 0){
       setIsloading2(false)
-      if(misproyectos.length!== undefined) {
-        setIsloading(true)
-      }else{
-        
-      setIsloading(false)}
+      setIsloading(false)
+      }
     }
   }
   const buscarCreador = async (data) => {
