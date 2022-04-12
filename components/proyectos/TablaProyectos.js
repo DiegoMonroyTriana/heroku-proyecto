@@ -74,7 +74,7 @@ export function TablaProyectos () {
                 <Progress value = {progreso * 100 /(faltan + progreso)} onChange={(e)=> e.preventDefault()} striped color = 'success'/> 
                 <span>{Math.floor(progreso * 100 /(faltan + progreso))} %</span>
                 <Spacer y ={0.5}/>
-                <Link href={'/proyectos/' + proyecto.id}><a className = 'bg-gray-700 text-white hover:bg-gray-500 p-2 rounded m-3 w-56'>Detalles</a></Link>  
+               
                 </Collapse>
               ))}
             </Collapse.Group> : <Text>No hay proyectos</Text>}
