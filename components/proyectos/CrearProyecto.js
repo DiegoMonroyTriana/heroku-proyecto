@@ -30,7 +30,7 @@ export function CrearProyecto (props) {
         showConfirmButton: false, 
         timer: 1500
       })
-      window.href = '/proyectos'
+      window.href = '/inicio'
       return 
     } catch (error) {
       Swal.fire({ 
