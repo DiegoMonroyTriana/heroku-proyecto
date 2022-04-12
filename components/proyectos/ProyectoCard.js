@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import config from '../../pages/api/config'
 import axios from 'axios'
 import { Collapse, Progress, Spacer} from '@nextui-org/react'
-import { Skeleton, Tooltip  } from '@chakra-ui/react'
+import { Skeleton } from '@chakra-ui/react'
 import Cookie from 'universal-cookie'
 import jwt from 'jsonwebtoken'
 import Link from 'next/link'
@@ -36,9 +36,9 @@ export function ProyectoCard () {
       }
       }
     }
-    if(misproyectos.length!== 0){
+    if(misproyectos.length!== 0 || misproyectos.length!== undefined){
       setIsloading2(false)
-      setIsloading(false)
+      setIsloading(true)
     }
   }
   const buscarCreador = async (data) => {
@@ -73,7 +73,13 @@ export function ProyectoCard () {
   },[])
   return (
     <div className = 'pt-5'>
-      
+      { isloading2 ? <div className = 'flex flex-col justify-center items-center'> 
+  <Skeleton height='50px' width= '80%' />
+  <Spacer y= {0.4}/>
+  <Skeleton height='50px' width= '80%'/>
+  <Spacer y= {0.4}/>
+  <Skeleton height='50px' width= '80%' />
+ </div>: <>
       {isloading ? <motion.div initial={{opacity: 0 }} animate = {{opacity:1, transition: {duration : 0.3}}}className = 'container'> <p className="text-4xl font-normal text-pink-800 text-center">
   Aún no tienes proyectos 
 </p></motion.div>:<div className = 'container'> <Collapse.Group shadow >
@@ -94,18 +100,18 @@ export function ProyectoCard () {
                 <label className = 'text-md font-bold'>Progreso del proyecto</label>
                 <Spacer y = {0.3}/>
                 <div className = 'grid-cols-3 gap-3 '>
-                 <label className = ' hover:text-red-500 cursor-pointer'> Tareas Pendientes: {faltan} || </label>
-                 <label className = ' hover:text-green-500 cursor-pointer'> Tareas Realizadas: {progreso} || </label>
+                  <label className = ' hover:text-red-500 cursor-pointer'> Tareas Pendientes: {faltan} || </label>
+                  <label className = ' hover:text-green-500 cursor-pointer'> Tareas Realizadas: {progreso} || </label>
                  <label className = ' hover:text-blue-500 cursor-pointer '> Total de tareas : {faltan + progreso}</label>
                 </div>  
                 <Progress value = {progreso * 100 /(faltan + progreso)} readOnly striped color = 'success'/> 
                 <span>{Math.floor(progreso * 100 /(faltan + progreso))} %</span>
                 <Spacer y ={0.5}/>
-                <Link href= {'proyectos/' + proyecto.id}><a className = 'bg-gray-700 text-white hover:bg-gray-500 p-2 rounded m-3 w-56' disabled >Detalles</a></Link> 
+                <Link href= {'proyectos/' + proyecto.id}><a className = 'bg-gray-700 text-white hover:bg-gray-500 p-2 rounded m-3 w-56' >Detalles</a></Link> 
                 </Collapse>
               ))}
             </Collapse.Group> </div>}
-    
+      </>}
      
     </div>
   )
