@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import config from '../../pages/api/config'
 import axios from 'axios'
-import { Collapse, Progress, Spacer, Text } from '@nextui-org/react'
+import { Collapse, Progress, Spacer} from '@nextui-org/react'
 import { Skeleton, Tooltip  } from '@chakra-ui/react'
 import Cookie from 'universal-cookie'
 import jwt from 'jsonwebtoken'
@@ -84,19 +84,20 @@ export function ProyectoCard () {
   Aún no tienes proyectos 
 </p></motion.div>:<div className = 'container'> <Collapse.Group shadow >
               {misproyectos.map((proyecto) => (
-                <Collapse className = "uppercase font-semibold" key={proyecto.id} title = {proyecto.nombre}>
-                <Text className='fs-3 normal-case font-bold' >Descripcion:  </Text>
+                <Collapse className = "uppercase font-extralight text-xl" key={proyecto.id} title = {proyecto.nombre}>
+                <label className='text-md normal-case font-bold' >Descripcion </label>
+                <Spacer y = {0.5}/>
                 <lablel >{proyecto.descripcion}</lablel>
                 <Spacer y = {1}/>
-                <label className = 'text-lg font-bold'>Fecha de de entrega del proyecto</label>
+                <label className = 'text-md font-bold'>Fecha de de entrega del proyecto</label>
                 <Spacer  y = {0.2}/>
                 <label className = 'text-md'>{proyecto.fecha_fin}</label>
                 <Spacer y = {1}/>
-                <label>Líder del proyecto </label>
+                <label className = 'font-bold'>Líder del proyecto </label>
                 <Spacer y = {0.2} />
-                <Text className='fs-3 normal-case'>{proyecto.nombre_creador}</Text>
+                <label className='text-md'>{proyecto.nombre_creador}</label>
                 <Spacer y ={1}/>
-                <label className = 'text-xl font-semibold'>Progreso del proyecto</label>
+                <label className = 'text-md font-bold'>Progreso del proyecto</label>
                 <Spacer y = {0.3}/>
                 <div className = 'grid-cols-3 gap-3 '>
                   <Link href ='/inicio'><a><Tooltip label = 'Ver tareas pendientes'><label className = ' hover:text-red-500 cursor-pointer'> Tareas Pendientes: {faltan} || </label></Tooltip></a></Link>
