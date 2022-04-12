@@ -10,8 +10,8 @@ import 'moment/locale/es'
 export function Navbar () {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const btnRef = useRef()
-  const fecha = moment().locale('es-mx').format('dddd DD [de] MMMM [de] YYYY')
-
+  const fecha = moment().locale('es-mx').format('DD MMMM YYYY')
+  
   const [usuarios, setUsuarios] = useState({
     nombre: '',
     apellido_paterno: '',
@@ -89,3 +89,4 @@ export function Navbar () {
 
   )
 }
+
